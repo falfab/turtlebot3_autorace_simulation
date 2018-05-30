@@ -5,6 +5,7 @@
 <arg name="y_pos" default="0.0"/>
 <arg name="z_pos" default="0.0"/>
 <arg name="track" default="track1"/>
+<arg name="use_gui" default="true"/>
 
 <node pkg="tf" type="static_transform_publisher" name="camera_tf" args="-1.95 -0.55 2.0 -1.58 0 -1.58 /odom /camera_link 100"/>
 
@@ -12,7 +13,7 @@
     <arg name="world_name" value="$(find turtlebot3_autorace_simulation)/world/tb3_autorace_$(arg track).world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="false"/>
-    <arg name="gui" value="true"/>
+    <arg name="gui" value="$(arg use_gui)"/>
     <arg name="headless" value="true"/>
     <arg name="debug" value="false"/>
 </include>
