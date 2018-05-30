@@ -1,0 +1,109 @@
+\section{Installation}
+
+%-----------------------
+
+\begin{frame}
+\frametitle{Prerequisites}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+	In order to perform autonomous driving, it will be used the \texttt{turtlebot3\_autorace\_simulation} ROS package.
+	It is supposed you have Ubuntu 16.04 with ROS Kinetic installed on your machine.
+\end{column}
+\begin{column}{0.5\textwidth}
+	\begin{figure}
+		\includegraphics[height=0.3\textheight]{figures/png/ubuntulogo}
+	\end{figure}
+	\begin{figure}
+		\includegraphics[height=0.3\textheight]{figures/png/roslogo}
+	\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+%-----------------------
+
+\begin{frame}[fragile]
+	\frametitle{Install Dependency Packages}
+	Proceed to install the Turtlebot dependency with the following command:
+	\begin{lstlisting}[language=bash]
+$ sudo apt-get install ros-kinetic-joy ros-kinetic-teleop-twist-joy ros-kinetic-teleop-twist-keyboard ros-kinetic-laser-proc ros-kinetic-rgbd-launch ros-kinetic-depthimage-to-laserscan ros-kinetic-rosserial-arduino ros-kinetic-rosserial-python ros-kinetic-rosserial-server ros-kinetic-rosserial-client ros-kinetic-rosserial-msgs ros-kinetic-amcl ros-kinetic-map-server ros-kinetic-move-base ros-kinetic-urdf ros-kinetic-xacro ros-kinetic-compressed-image-transport ros-kinetic-rqt-image-view ros-kinetic-gmapping ros-kinetic-navigation ros-kinetic-interactive-markers
+	\end{lstlisting}
+\end{frame}
+
+%-----------------------
+
+\begin{frame}[fragile]
+	\frametitle{Create Your Turtlebot ROS Workspace}
+	Now we will create a ROS workspace to work in it. If you have already a ROS workspace you can use it and skip the commands below.
+\begin{lstlisting}[language=bash]
+$ mkdir -p $HOME/turtlebot_ws/src
+$ cd $HOME/turtlebot_ws
+$ catkin_make
+$ source ./devel/setup.bash
+\end{lstlisting}
+It is suggested to add the source to the file \verb$setup.bash$ to your \verb$.bashrc$ file.
+\end{frame}
+
+%-----------------------
+
+\begin{frame}[fragile]
+	\frametitle{Clone Turtlebot Packages}
+Now we will clone the Turtlebot packages and build them all.
+
+\begin{lstlisting}[language=bash]
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_autorace.git
+$ git clone https://github.com/falfab/turtlebot3_autorace_simulation.git
+$ cd $HOME/turtlebot_ws && catkin_make
+\end{lstlisting}
+\end{frame}
+
+%-----------------------
+
+\begin{frame}[fragile]
+	\frametitle{Folders Explanation}
+	Move into the \verb|turtlebot3_autorace_simulation| repository. You will notice different subfolders:
+	\begin{itemize}
+		\item \texttt{world/} contains the gazebo tracks models which will be used in the autonomous driving simulation
+		\item \texttt{urdf/} contains the \textit{Turtlebot3 Burger Pi} robot description
+		\item \texttt{launch/} contains the ROS launchfile used to launch simulation environment and autonomous driving 
+		\item \texttt{config/} contains the \verb$yaml$ configuration file used to calibrate the camera compensation, the camera projection and lane detection
+	\end{itemize}
+\end{frame}
+
+%-----------------------
+
+\begin{frame}[fragile]
+	\frametitle{Install Environment Models}
+In order to run \texttt{gazebo} with the simulation environment, you need to put the \textit{world description} inside the gazebo \verb$model$ folder. Execute the following steps to do it:
+\begin{lstlisting}[language=bash]
+$ roscd turtlebot3_autorace_simulation
+$ cp -r ./world/turtlebot3_autorace_track* $HOME/.gazebo/models
+\end{lstlisting}
+
+If you do not have the \verb$.gazebo$ folder is due you never opened \texttt{gazebo}.
+Open a terminal and run this command:
+\begin{lstlisting}[language=bash]
+$ gazebo	
+\end{lstlisting}
+It will setup his environment and create the folders you need.
+\end{frame}
+
+% ---------------------
+
+\begin{frame}[fragile]
+	\frametitle{Install Robot Model}
+In order to use the \textit{Turtlebot3 Burger Pi}, you need to move the robot description inside the available robot models. Do the following steps:
+\begin{lstlisting}[language=bash]
+$ cp ./urdf/turtlebot3_burger_pi* $HOME/turtlebot_ws/src/turtlebot3/turtlebot3_description/urdf
+\end{lstlisting}
+
+Remember to set it as the robot description you want to use:
+
+\begin{lstlisting}[language=bash]
+$ export TURTLEBOT3_MODEL=burger_pi
+\end{lstlisting}
+It is suggested to add the last command to your \verb$.bashrc$ file.
+\end{frame}

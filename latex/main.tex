@@ -1,0 +1,47 @@
+\documentclass{beamer}
+%\usepackage{default}
+\usetheme[progressbar=frametitle]{metropolis}
+
+
+\usepackage[utf8]{inputenc} % per gli accenti
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{listings, inconsolata}
+\usepackage{color}
+
+\definecolor{mygray}{rgb}{0.9,0.9,0.9}
+\lstset{backgroundcolor=\color{mygray}, 
+	    tabsize=2, 
+	    frame=lines,
+		basicstyle=\ttfamily\footnotesize,
+		keywordstyle=\bfseries,
+		breaklines=true,
+		keywordstyle=\color{blue}
+}
+
+\title {
+	Turtlebot 3 Autonomous Driving
+}
+\author{Falezza Fabio VR409987}
+
+\date{\today}
+\institute{
+	Verona University
+}
+
+\begin{document}
+%\begin{frame}
+%\titlepage
+%\addtocounter{framenumber}{-1}
+%\end{frame}
+%	
+
+\maketitle
+
+\input{src/introduction}
+\input{src/installation}
+\input{src/howitworks}
+\input{src/launch}
+	
+\end{document}
