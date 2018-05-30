@@ -7,14 +7,15 @@
 $ roslaunch turtlebot3_autorace_simulation gazebo.launch
 \end{lstlisting}
 
-This launch file could take four input arguments:
+This launch file could take five input arguments:
 \begin{itemize}
 	\item \texttt{x\_pos}: set the x start coordinate of the robot
 	\item \texttt{y\_pos}: set the y start coordinate of the robot
 	\item \texttt{z\_pos}: set the z start coordinate of the robot
 	\item \texttt{track}: set the track to import in the environment
+	\item \texttt{use\_gui}: set if it has to load the user interface
 \end{itemize}
-By default it set $x = 0, y = 0, z = 0$ and set the track as \texttt{track1}
+By default it set $x = 0, y = 0, z = 0$, it set the track as \texttt{track1} and \texttt{use\_gui=True}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -39,4 +40,26 @@ The calibration mode could be enabled by running the following command:
 \begin{lstlisting}[language=bash]
 $ roslaunch turtlebot3_autorace_simulation autorace.launch calibration_mode:=calibration
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Robot Visualization}
+	In order to watch the image published on the ROS topics, a ROS launch file is provided. This launch file open \textit{RViz} and show the robot odometry and the images published on \texttt{/camera/rgb/image\_raw} and \texttt{/detect/lane}.
+	
+	To run \textit{RViz} do the following command:
+\begin{lstlisting}
+$ roslaunch turtlebot3_autorace_simulation rviz.launch
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Robot Visualization II}
+	If your PC cannot execute \texttt{Gazebo} and \textit{RViz} simultaneously you should try to launch \texttt{Gazebo} with the \texttt{use\_gui} parameter setted to false:
+\begin{lstlisting}[language=bash]
+$ roslaunch turtlebot3_autorace_simulation gazebo.launch use_gui:=false
+\end{lstlisting}
+\begin{figure}
+	\includegraphics[width=0.65\textwidth]{figures/png/rviz}
+\end{figure}
+
 \end{frame}
