@@ -28,7 +28,7 @@ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_autorace.git
-<!-- TODO: add clone to this repository -->
+git clone https://github.com/falfab/turtlebot3_autorace_simulation.git
 cd ~/catkin_ws && catkin_make
 ```
 
@@ -38,6 +38,8 @@ This repository contains a folder named ```world``` which contains the gazebo si
 roscd turtlebot3_autorace_simulation
 cp -r ./world/turtlebot3_autorace_track* $HOME/.gazebo/models
 ```
+
+If you do not have ```.gazebo``` directory into your home it is because you never do not opened gazebo.
 
 Now these models will be avaible inside shapes models.
 
@@ -74,14 +76,6 @@ This launch file can takes the following arguments:
 2. ```x_pos```: set the x position of the robot.
 3. ```x_pos```: set the x position of the robot.
 4. ```track```: choose the track name. In this repository track1 and track2 are provided.
-
-### Controller ###
-
-The robot need a controller to move. It is provided with a ROS launch file. Do the following command:
-
-```bash
-roslaunch turtlebot3_autorace_simulation fake_controller.launch
-```
 
 ### Autorace nodes ###
 
