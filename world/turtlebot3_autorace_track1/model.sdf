@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+<model name="turtlebot3_track">
+  <static>true</static>
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>4 4</size>
+          </plane>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>50</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>4 4</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <!-- <uri>model://turtlebot3_track/materials/scripts/turtlebot3_track.material</uri>
+            <name>Turtlebot3Track/Image</name> -->
+            <uri>model://turtlebot3_autorace_track1/materials/scripts</uri>
+            <uri>model://turtlebot3_autorace_track1/materials/textures</uri>
+            <name>Turtlebot3Track1/Image</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

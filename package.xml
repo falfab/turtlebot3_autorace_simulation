@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>turtlebot3_autorace_simulation</name>
+  <version>0.0.0</version>
+  <description>The turtlebot3_autorace_simulation package</description>
+  <maintainer email="fabio.falezza@gmail.com">Fabio Falezza</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

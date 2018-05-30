@@ -1,0 +1,59 @@
+<launch>
+    <!--Calibration is done by config file passed as rosparam. Setting calibration_mode you can do a manual configuration--> 
+    <arg name="calibration_mode" default="action" doc="calibration_mode type [calibration, action]"/>
+
+    <!-- image projection -->
+    <node pkg="turtlebot3_autorace_camera" type="image_projection" name="image_projection" output="screen">
+      <rosparam command="load" file="$(find turtlebot3_autorace_simulation)/config/camera_projection.yaml" />
+      <param if="$(eval calibration_mode == 'calibration')" name="/is_extrinsic_camera_calibration_mode" value="True"/>
+      <param if="$(eval calibration_mode == 'action')" name="/is_extrinsic_camera_calibration_mode" value="False"/>    
+
+      <remap from="/camera/extrinsic_camera_calibration/top_x" to="~camera/extrinsic_camera_calibration/top_x"/>
+      <remap from="/camera/extrinsic_camera_calibration/top_y" to="~camera/extrinsic_camera_calibration/top_y"/>
+      <remap from="/camera/extrinsic_camera_calibration/bottom_x" to="~camera/extrinsic_camera_calibration/bottom_x"/>
+      <remap from="/camera/extrinsic_camera_calibration/bottom_y" to="~camera/extrinsic_camera_calibration/bottom_y"/>
+
+      <remap from="/camera/image_input" to="/camera/rgb/image_raw" />
+      <remap from="/camera/image_input/compressed" to="/camera/rgb/image_raw/compressed" />
+      <remap from="/camera/image_output" to="/camera/image_projected" />
+      <remap from="/camera/image_output/compressed" to="/camera/image_projected/compressed" />
+      <remap from="/camera/image_calib" to="/camera/image_extrinsic_calib" />
+      <remap from="/camera/image_calib/compressed" to="/camera/image_extrinsic_calib/compressed" />
+    </node>
+
+    <!-- image compensation -->
+    <node pkg="turtlebot3_autorace_camera" type="image_compensation" name="image_compensation" output="screen">
+      <rosparam command="load" file="$(find turtlebot3_autorace_simulation)/config/camera_compensation.yaml" />
+      <param if="$(eval calibration_mode == 'calibration')" name="/is_extrinsic_camera_calibration_mode" value="True"/>
+      <param if="$(eval calibration_mode == 'action')" name="/is_extrinsic_camera_calibration_mode" value="False"/> 
+
+      <remap from="/camera/image_input" to="/camera/image_projected" />
+      <remap from="/camera/image_input/compressed" to="/camera/image_projected/compressed" />
+      <remap from="/camera/image_output" to="/camera/image_projected_compensated" />
+      <remap from="/camera/image_output/compressed" to="/camera/image_projected_compensated/compressed" />
+    </node>
+
+    <!-- lane detect -->
+    <node pkg="turtlebot3_autorace_detect" type="detect_lane" name="detect_lane" output="screen">
+      <rosparam command="load" file="$(find turtlebot3_autorace_simulation)/config/detect_lane.yaml" />
+      <param if="$(eval calibration_mode == 'calibration')" name="/is_detection_calibration_mode" value="True"/>
+      <param if="$(eval calibration_mode == 'action')" name="/is_detection_calibration_mode" value="False"/>
+
+      <remap from="/detect/image_input" to="/camera/image_projected_compensated" />
+      <remap from="/detect/image_input/compressed" to="/camera/image_projected_compensated/compressed" />
+      <remap from="/detect/image_output" to="/detect/image_lane" />
+      <remap from="/detect/image_output/compressed" to="/detect/image_lane/compressed" />
+      <remap from="/detect/image_output_sub1" to="/detect/image_white_lane_marker" />
+      <remap from="/detect/image_output_sub1/compressed" to="/detect/image_white_lane_marker/compressed" />
+      <remap from="/detect/image_output_sub2" to="/detect/image_yellow_lane_marker" />
+      <remap from="/detect/image_output_sub2/compressed" to="/detect/image_yellow_lane_marker/compressed" />    
+    </node>
+
+    <!-- lane control -->
+    <group if="$(eval calibration_mode == 'action')">
+      <node pkg="turtlebot3_autorace_control" type="control_lane" name="control_lane" output="screen">
+        <remap from="/control/lane" to="/detect/lane" />
+        <remap from="/control/cmd_vel" to="cmd_vel" />
+      </node>
+    </group>
+</launch>
