@@ -1,0 +1,9 @@
+<launch>
+    <include file="$(find turtlebot3_autorace_simulation)/launch/gazebo.launch">
+        <arg name="use_gui" default="false"/>
+        <arg name="track" default="circuit"/>
+    </include>
+
+    <node name="detect_logo" pkg="turtlebot3_autorace_simulation" type="detect_logo" output="screen"></node>
+    <node name="lap_counter" pkg="turtlebot3_autorace_simulation" type="lap_counter" output="screen"></node>
+</launch>

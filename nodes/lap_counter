@@ -1,0 +1,107 @@
+#!/usr/bin/env python
+
+import rospy
+import time
+import numpy as np
+from enum import Enum
+from std_msgs.msg import UInt8, Float32
+from geometry_msgs.msg import Twist
+
+MIN_DETECTION = 20
+
+class LapCounter(object):
+    def __init__(self):
+        self.sub_detection = rospy.Subscriber('/detect/logo', UInt8, self.cbDetection)
+        self.sub_vel = rospy.Subscriber('/cmd_vel', Twist, self.cbStartTimer)
+        self.pub_time = rospy.Publisher('lap_counter/time', Float32, queue_size=1)
+        self.pub_laps = rospy.Publisher('lap_counter/laps', UInt8, queue_size=1)
+        self.Logos = Enum('Logos', 'cocacola rolex pirelli seiko heineken martini redbull chess')
+        self.detect_counter = np.zeros(7)
+        self.current_state = self.Logos.chess.value
+        self.timer_started = False
+
+        self.laps = 0
+
+        self.start = 0
+        self.end = 0
+
+    def cbDetection(self, uint_msg):
+        if (uint_msg.data == self.Logos.cocacola.value):
+            self.detect_counter[self.Logos.cocacola.value -1] += 1
+            if (self.current_state == self.Logos.chess.value):
+                rospy.loginfo('Cocacola state')
+                self.current_state = self.Logos.cocacola.value
+
+        elif (uint_msg.data == self.Logos.rolex.value):
+            self.detect_counter[self.Logos.rolex.value -1] += 1
+            if (self.current_state == self.Logos.cocacola.value):
+                rospy.loginfo('Rolex state')
+                self.current_state = self.Logos.rolex.value
+
+        elif (uint_msg.data == self.Logos.pirelli.value):
+            self.detect_counter[self.Logos.pirelli.value -1] += 1
+            if (self.current_state == self.Logos.rolex.value):
+                rospy.loginfo('Pirelli state')
+                self.current_state = self.Logos.pirelli.value
+
+        elif (uint_msg.data == self.Logos.seiko.value):
+            self.detect_counter[self.Logos.seiko.value -1] += 1
+            if (self.current_state == self.Logos.pirelli.value):
+                rospy.loginfo('Seiko state')
+                self.current_state = self.Logos.seiko.value
+
+        elif (uint_msg.data == self.Logos.heineken.value):
+            self.detect_counter[self.Logos.heineken.value -1] += 1
+            if (self.current_state == self.Logos.seiko.value):
+                rospy.loginfo('Heineken state')
+                self.current_state = self.Logos.heineken.value
+
+        elif (uint_msg.data == self.Logos.martini.value):
+            self.detect_counter[self.Logos.martini.value -1] += 1
+            if (self.current_state == self.Logos.heineken.value):
+                rospy.loginfo('Martini state')
+                self.current_state = self.Logos.martini.value
+
+        elif (uint_msg.data == self.Logos.redbull.value):
+            self.detect_counter[self.Logos.redbull.value -1] += 1
+            if (self.current_state == self.Logos.martini.value):
+                rospy.loginfo('Redbull state')
+                self.current_state = self.Logos.redbull.value
+
+        elif (uint_msg.data == self.Logos.chess.value):
+            if (self.current_state == self.Logos.redbull.value):
+                rospy.loginfo('Chess state')
+                self.current_state = self.Logos.chess.value
+                global MIN_DETECTION
+                for count in self.detect_counter:
+                    if (count < MIN_DETECTION):
+                        rospy.loginfo('Min detection not reached. Lap is not counted')
+                        return
+                self.laps += 1
+                self.end = time.time()
+                msg = 'Laps: %i Time: %.2lf s' % (self.laps,  self.end - self.start)
+                rospy.loginfo(msg)
+
+                int_msg = UInt8()
+                int_msg.data = self.laps
+
+                time_msg = Float32()
+                time_msg.data =  (self.end - self.start)
+                self.start = time.time()
+                self.pub_laps.publish(int_msg)
+                self.pub_time.publish(time_msg)
+
+    def cbStartTimer(self, vel_msg):
+        if not self.timer_started and vel_msg.linear.x != 0:
+            rospy.loginfo('Start')
+            self.start = time.time()
+            self.timer_started = True
+
+    def main(self):
+        rospy.spin()
+
+if __name__ == '__main__':
+    rospy.init_node('lap_counter')
+    lap_counter = LapCounter()
+    lap_counter.main() 
+

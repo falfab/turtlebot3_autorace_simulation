@@ -100,10 +100,26 @@ roslaunch turtlebot3_autorace_simulation autorace.launch
 Now the robot will move and will follow the lanes.
 
 ### Robot Visualization ###
+
 A RViz launch file is provided:
 
 ```bash
 roslaunch turtlebot3_autorace_simulation rviz.launch
+```
+
+### Circuit race with logo detection ###
+
+In order to makes the turtlebot perform a race in a circuit with logo detection do the following steps:
+
+```bash
+roslaunch turtlebot3_autorace_simulation circuit.launch
+roslaunch turtlebot3_autorace_simulation autorace.launch
+```
+
+By default gazebo is launched with no gui, if you want to see robot visualization do this:
+
+```bash
+roslaunch turtlebot3_autorace_simulation config_file:=circuit.rviz
 ```
 
 <!-- ## Calibration ##

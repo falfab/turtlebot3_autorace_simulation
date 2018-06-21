@@ -152,8 +152,8 @@ class DetectLogo(object):
 
     def detect_chess_flag(self, kp_input, des_input):
         matches_chess = self.flann.knnMatch(des_input,self.des_chess,k=2)
-        MIN_MATCH_COUNT = 3
-        MIN_MSE_DECISION = 20000
+        MIN_MATCH_COUNT = 2
+        MIN_MSE_DECISION = 35000
         good_chess = []
         for m,n in matches_chess:
             if m.distance < 0.7*n.distance:
