@@ -46,6 +46,8 @@ This repository contains a folder named ```world``` which contains the gazebo si
 ```bash
 roscd turtlebot3_autorace_simulation
 cp -r ./world/turtlebot3_autorace_track* $HOME/.gazebo/models
+cp -r ./world/*_logo $HOME/.gazebo/models
+cp -r ./world/chess_flag $HOME/.gazebo/models
 ```
 
 If you do not have ```.gazebo``` directory into your home it is because you never do not opened gazebo.
