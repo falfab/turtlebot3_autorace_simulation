@@ -48,16 +48,29 @@ It is suggested to add the source to the file \verb$setup.bash$ to your \verb$.b
 
 \begin{frame}[fragile]
 	\frametitle{Clone Turtlebot Packages}
-Now we will clone the Turtlebot packages and build them all.
+Now we will clone the Turtlebot packages:
 
 \begin{lstlisting}[language=bash]
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_autorace.git
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Clone Turtlebot Packages II}
+If you do not cloned the \verb$turtlebot3_autorace_simulation$ repository yet, do it with this command:
+\begin{lstlisting}[language=bash]
 $ git clone https://github.com/falfab/turtlebot3_autorace_simulation.git
+\end{lstlisting}
+
+Then build all:
+\begin{lstlisting}[language=bash]
 $ cd $HOME/turtlebot_ws && catkin_make
 \end{lstlisting}
+
 \end{frame}
 
 %-----------------------

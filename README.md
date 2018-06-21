@@ -21,15 +21,24 @@ Next you need the packages with the turtlebot robot model, turlebot simulation e
 cd ~/catkin_ws/src/
 ```
 
-- Clone all the repositories listed below and build everything
+- Clone all the repositories listed below:
 
 ```bash
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_autorace.git
+```
+
+If you do not cloned this repository yet:
+```bash
 git clone https://github.com/falfab/turtlebot3_autorace_simulation.git
-cd ~/catkin_ws && catkin_make
+```
+
+And build:
+```bash
+cd $HOME/catkin_ws
+catkin_make
 ```
 
 This repository contains a folder named ```world``` which contains the gazebo simulation environments. In order to makes it work you need to copy the environments inside the gazebo models directory. In order to do that do the following commands:
@@ -76,6 +85,7 @@ This launch file can takes the following arguments:
 2. ```x_pos```: set the x position of the robot.
 3. ```x_pos```: set the x position of the robot.
 4. ```track```: choose the track name. In this repository track1 and track2 are provided.
+5. ```use_gui```: choose if gazebo has to load the gui.
 
 ### Autorace nodes ###
 
@@ -88,6 +98,13 @@ roslaunch turtlebot3_autorace_simulation autorace.launch
 ```
 
 Now the robot will move and will follow the lanes.
+
+### Robot Visualization ###
+A RViz launch file is provided:
+
+```bash
+roslaunch turtlebot3_autorace_simulation rviz.launch
+```
 
 <!-- ## Calibration ##
 
