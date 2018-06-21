@@ -7,7 +7,7 @@ from enum import Enum
 from std_msgs.msg import UInt8, Float32
 from geometry_msgs.msg import Twist
 
-MIN_DETECTION = 20
+MIN_DETECTION = 5
 
 class LapCounter(object):
     def __init__(self):
@@ -74,6 +74,7 @@ class LapCounter(object):
                 self.current_state = self.Logos.chess.value
                 global MIN_DETECTION
                 for count in self.detect_counter:
+                    rospy.loginfo(count)
                     if (count < MIN_DETECTION):
                         rospy.loginfo('Min detection not reached. Lap is not counted')
                         return
