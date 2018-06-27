@@ -63,3 +63,30 @@ $ roslaunch turtlebot3_autorace_simulation gazebo.launch use_gui:=false
 \end{figure}
 
 \end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Robot Circuit With Lap Counter And Timer}
+	In order to makes the robot run in the circuit with spot logo recognition with Lap Counter and Timer do the following commands:
+\begin{lstlisting}[language=bash]
+roslaunch turtlebot3_autorace_simulation circuit.launch
+roslaunch turtlebot3_autorace_simulation autorace.launch
+\end{lstlisting}
+	In order to visualize the Robot Vision you can use RViz also this time.
+	Remember to use the following command which pass a different configuration file in order to view a most significant topic.
+\begin{lstlisting}[language=bash]
+roslaunch turtlebot3_autorace_simulation config_file:=circuit.rviz	
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Robot Circuit With Lap Counter And Timer II}
+	Here is a short video of the Robot visualization during the race:
+	\begin{itemize}
+		\item https://www.youtube.com/watch?v=FR27W19rrYA
+	\end{itemize}
+	
+	
+	
+
+
+\end{frame}
