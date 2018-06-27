@@ -45,6 +45,7 @@ class DetectLogo(object):
         self.img_rolex = cv2.imread(dir_path + 'rolex.png',0)
         self.img_seiko = cv2.imread(dir_path + 'seiko.png',0)
 
+        # Get keypoints and descriptors
         self.kp_chess, self.des_chess = self.sift.detectAndCompute(self.img_chess_flag,None)
         self.kp_cocacola, self.des_cocacola = self.sift.detectAndCompute(self.img_cocacola,None)
         self.kp_heineken, self.des_heineken = self.sift.detectAndCompute(self.img_heineken,None)
@@ -54,12 +55,14 @@ class DetectLogo(object):
         self.kp_rolex, self.des_rolex = self.sift.detectAndCompute(self.img_rolex,None)
         self.kp_seiko, self.des_seiko = self.sift.detectAndCompute(self.img_seiko,None)
 
+        # Setting algorithm params
         FLANN_INDEX_KDTREE = 0
         index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
         search_params = dict(checks = 50)
         self.flann = cv2.FlannBasedMatcher(index_params, search_params)
 
     def fnCalcMSE(self, arr1, arr2):
+        # Calculate Mean Square Error
         squared_diff = (arr1 - arr2) ** 2
         sum = np.sum(squared_diff)
         num_all = arr1.shape[0] * arr1.shape[1] #cv_image_input and 2 should have same shape
@@ -79,6 +82,7 @@ class DetectLogo(object):
         # find the keypoints and descriptors with SIFT
         kp_input, des_input = self.sift.detectAndCompute(cv_image_input,None)
 
+        # Brute force matching
         chess = self.detect_chess_flag(kp_input, des_input)
         cocacola = self.detect_cocacola(kp_input, des_input, cv_image_input)
         martini = self.detect_martini(kp_input, des_input)

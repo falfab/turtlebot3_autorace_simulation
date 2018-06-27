@@ -2,6 +2,11 @@
 
 Turtlebot 3 Autorace simulation is a ROS package which allows to run ```turtlebot3_autorace``` from ROBOTIS-GIT in simulation. It is fully parametrizable and customizable. Next will follow the instructions to getting started with standard examples and to customize trucks to test the package.
 
+Link to the video:
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=FR27W19rrYA" target="_blank"><img src="http://img.youtube.com/vi/FR27W19rrYA/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
 ## Getting Started ##
 
 It is supposed you have Ubuntu 16.04 with ROS Kinetic installed.
